@@ -1,0 +1,108 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://jugador.gd" id="s"]
+[ext_resource type="Texture2D" path="res://assets/prisionero_hoja.png" id="t0"]
+
+[sub_resource type="AtlasTexture" id="A0_0"]
+atlas = ExtResource("t0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="A0_1"]
+atlas = ExtResource("t0")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="A0_2"]
+atlas = ExtResource("t0")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="A0_3"]
+atlas = ExtResource("t0")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="A0_4"]
+atlas = ExtResource("t0")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="A0_5"]
+atlas = ExtResource("t0")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="A0_6"]
+atlas = ExtResource("t0")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_A0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("A0_0")
+}],
+"loop": false,
+"name": &"quieto",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("A0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("A0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("A0_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("A0_4")
+}],
+"loop": true,
+"name": &"correr",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("A0_5")
+}],
+"loop": false,
+"name": &"saltar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("A0_6")
+}],
+"loop": false,
+"name": &"caer",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="FormaGolpe"]
+size = Vector2(28, 28)
+
+[sub_resource type="RectangleShape2D" id="Forma"]
+size = Vector2(24, 56)
+
+
+[node name="Prisionero" type="CharacterBody2D"]
+script = ExtResource("s")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_A0")
+animation = &"quieto"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Forma")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Golpe" type="Area2D" parent="."]
+position = Vector2(36, 0)
+
+[node name="ColorRect" type="ColorRect" parent="Golpe"]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(1, 0.3, 0.3, 0.35)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Golpe"]
+shape = SubResource("FormaGolpe")
