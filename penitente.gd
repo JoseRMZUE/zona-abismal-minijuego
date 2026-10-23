@@ -59,7 +59,9 @@ func actualizar_animacion():
 		sprite.speed_scale = 1.0
 	elif abs(real.x) > 1.0:
 		sprite.play("correr")
+		# Nivel 3: el ritmo de las piernas va con la rapidez real, no siempre al 100%.
 		sprite.speed_scale = abs(real.x) / speed
+		print(sprite.speed_scale)
 	else:
 		sprite.play("quieto")
 		sprite.speed_scale = 1.0
