@@ -1,12 +1,12 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cqevtwqb0tm3r"]
 
 [ext_resource type="Script" uid="uid://doadakbpyeck4" path="res://mundo.gd" id="1"]
-[ext_resource type="PackedScene" path="res://penitente.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://sbgxaalf2f2g" path="res://penitente.tscn" id="2"]
 
-[node name="Mundo" type="Node2D"]
+[node name="Mundo" type="Node2D" unique_id=731446300]
 script = ExtResource("1")
 
-[node name="Mapa" type="Node2D" parent="."]
+[node name="Mapa" type="Node2D" parent="." unique_id=1532752580]
 
-[node name="Penitente" parent="." instance=ExtResource("2")]
+[node name="Penitente" parent="." unique_id=2060664170 instance=ExtResource("2")]
 position = Vector2(160, 510)
