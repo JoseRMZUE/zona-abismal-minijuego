@@ -1,5 +1,23 @@
-Base del Taller 3 — Dead Cells, para repartir a los estudiantes del equipo.
+Zona Abismal — Taller 3 (basado en la base "Dead Cells" del profesor)
 
-Ábranlo con Godot 4.7: Import → elegir project.godot → Import & Edit. La escena principal es
-mundo.tscn (F5). Si ya tienen su propio proyecto con el taller anterior terminado, pueden seguir en el
-suyo: copien la carpeta assets/ y lo que pida la guía.
+Qué cambié respecto a la base:
+- jugador.gd/.tscn -> penitente.gd/.tscn (nodo "Prisionero" -> "Penitente").
+- mundo.gd: el color de los bloques ahora es #2A2430 (piedra oscura del
+  templo) en vez del gris genérico de la base.
+- assets/penitente_hoja.png: la hoja placeholder de la base, recoloreada
+  por código para que combine con la paleta de Zona Abismal (sigue siendo
+  la misma grilla 64x64 de 7 cuadros).
+
+Nivel 1 — animación según la velocidad real:
+- actualizar_animacion() en penitente.gd: decide quieto/correr/saltar/caer
+  usando is_on_floor() y get_real_velocity() (NUNCA la tecla presionada),
+  para que si el jugador empuja una pared se vea "quieto" aunque la tecla
+  siga activa.
+- sprite.speed_scale en "correr" sigue la rapidez real (abs(real.x)/speed),
+  así que el ritmo de las piernas no siempre va al 100%.
+
+Todavía pendiente: Nivel 2 (orientación + área de golpe) y Nivel 3 (rodar).
+El nodo "Golpe" ya viene de la base pero aún no se usa.
+
+Abran con Godot 4.7: Import → elijan project.godot → Import & Edit.
+F5 para correr (la escena principal es mundo.tscn).

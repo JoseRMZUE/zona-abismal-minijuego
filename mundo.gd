@@ -16,4 +16,6 @@ const MAPA = [
 
 
 func _ready():
-	construir_bloques(MAPA, Color(0.3, 0.32, 0.4, 1))
+	# Piedra del templo hundido, más clara que el fondo para que se note
+	# dónde se puede caminar.
+	construir_bloques(MAPA, Color(0.1647, 0.1412, 0.1882, 1))  # #2A2430

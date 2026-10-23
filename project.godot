@@ -4,7 +4,7 @@ config_version=5
 
 [application]
 
-config/name="Dead Cells - Base Taller 3"
+config/name="Zona Abismal - Taller 3"
 run/main_scene="res://mundo.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
@@ -44,7 +44,7 @@ rodar={
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0.1, 0.12, 0.18, 1)
+environment/defaults/default_clear_color=Color(0.0706, 0.0588, 0.102, 1)
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
