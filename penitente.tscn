@@ -1,10 +1,10 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://sbgxaalf2f2g"]
 
 [ext_resource type="Script" uid="uid://7h4ulbxm6yms" path="res://penitente.gd" id="s"]
 [ext_resource type="AudioStream" uid="uid://dl34ks1c1wrtp" path="res://assets/espada.wav" id="snd_espada"]
 [ext_resource type="AudioStream" uid="uid://poqfm7c1y7qm" path="res://assets/rodar.wav" id="snd_rodar"]
-[ext_resource type="Texture2D" uid="uid://c1qf8m2x7k00a" path="res://assets/penitente_hoja.png" id="t0"]
 [ext_resource type="Texture2D" uid="uid://deicma1hk5704" path="res://assets/penitente_real.png" id="t1"]
+[ext_resource type="Texture2D" path="res://assets/penitente_deslizar.png" id="t2"]
 
 [sub_resource type="AtlasTexture" id="R_caer_0"]
 atlas = ExtResource("t1")
@@ -58,29 +58,29 @@ region = Rect2(961, 22, 90, 68)
 atlas = ExtResource("t1")
 region = Rect2(2, 12, 73, 78)
 
-[sub_resource type="AtlasTexture" id="A0_7"]
-atlas = ExtResource("t0")
-region = Rect2(448, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="R_rodar_0"]
+atlas = ExtResource("t2")
+region = Rect2(0, 0, 74, 63)
 
-[sub_resource type="AtlasTexture" id="A0_8"]
-atlas = ExtResource("t0")
-region = Rect2(512, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="R_rodar_1"]
+atlas = ExtResource("t2")
+region = Rect2(80, 0, 74, 63)
 
-[sub_resource type="AtlasTexture" id="A0_9"]
-atlas = ExtResource("t0")
-region = Rect2(576, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="R_rodar_2"]
+atlas = ExtResource("t2")
+region = Rect2(160, 15, 92, 48)
 
-[sub_resource type="AtlasTexture" id="A0_10"]
-atlas = ExtResource("t0")
-region = Rect2(640, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="R_rodar_3"]
+atlas = ExtResource("t2")
+region = Rect2(258, 15, 92, 48)
 
-[sub_resource type="AtlasTexture" id="A0_11"]
-atlas = ExtResource("t0")
-region = Rect2(704, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="R_rodar_4"]
+atlas = ExtResource("t2")
+region = Rect2(356, 14, 92, 49)
 
-[sub_resource type="AtlasTexture" id="A0_12"]
-atlas = ExtResource("t0")
-region = Rect2(768, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="R_rodar_5"]
+atlas = ExtResource("t2")
+region = Rect2(454, 14, 92, 49)
 
 [sub_resource type="AtlasTexture" id="R_saltar_0"]
 atlas = ExtResource("t1")
@@ -149,22 +149,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("A0_7")
+"texture": SubResource("R_rodar_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("A0_8")
+"texture": SubResource("R_rodar_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("A0_9")
+"texture": SubResource("R_rodar_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("A0_10")
+"texture": SubResource("R_rodar_3")
 }, {
 "duration": 1.0,
-"texture": SubResource("A0_11")
+"texture": SubResource("R_rodar_4")
 }, {
 "duration": 1.0,
-"texture": SubResource("A0_12")
+"texture": SubResource("R_rodar_5")
 }],
 "loop": 0,
 "name": &"rodar",
@@ -185,33 +185,33 @@ size = Vector2(34, 82)
 [sub_resource type="RectangleShape2D" id="FormaGolpe"]
 size = Vector2(36, 36)
 
-[node name="Penitente" type="CharacterBody2D"]
+[node name="Penitente" type="CharacterBody2D" unique_id=53610435]
 script = ExtResource("s")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1058773764]
 sprite_frames = SubResource("SpriteFrames_A0")
 animation = &"quieto"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=247527309]
 shape = SubResource("Forma")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1344040017]
 
-[node name="Golpe" type="Area2D" parent="."]
+[node name="Golpe" type="Area2D" parent="." unique_id=1038780853]
 position = Vector2(50, 0)
 
-[node name="ColorRect" type="ColorRect" parent="Golpe"]
+[node name="ColorRect" type="ColorRect" parent="Golpe" unique_id=324226400]
 offset_left = -18.0
 offset_top = -18.0
 offset_right = 18.0
 offset_bottom = 18.0
 color = Color(1, 0.3, 0.3, 0.35)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Golpe"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Golpe" unique_id=2140401612]
 shape = SubResource("FormaGolpe")
 
-[node name="Espada" type="AudioStreamPlayer2D" parent="."]
+[node name="Espada" type="AudioStreamPlayer2D" parent="." unique_id=1736268474]
 stream = ExtResource("snd_espada")
 
-[node name="Rodar" type="AudioStreamPlayer2D" parent="."]
+[node name="Rodar" type="AudioStreamPlayer2D" parent="." unique_id=661225330]
 stream = ExtResource("snd_rodar")

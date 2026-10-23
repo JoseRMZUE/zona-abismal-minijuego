@@ -2,73 +2,75 @@ Zona Abismal — Taller 3 (basado en la base "Dead Cells" del profesor)
 
 Qué cambié respecto a la base:
 - jugador.gd/.tscn -> penitente.gd/.tscn (nodo "Prisionero" -> "Penitente").
-- mundo.gd: el color de los bloques ahora es #2A2430 (piedra oscura del
-  templo) en vez del gris genérico de la base.
-- assets/penitente_hoja.png: la hoja placeholder de la base, recoloreada
-  por código para que combine con la paleta de Zona Abismal (sigue siendo
-  la misma grilla 64x64 de 7 cuadros).
+- mundo.gd: el color de los bloques ahora es el mismo #1B1F2B (piedra oscura
+  del templo) en vez del gris genérico.
+- Agregué a penitente.tscn la animación "rodar" (Nivel 3) y dos
+  AudioStreamPlayer2D: "Espada" (assets/espada.wav) y "Rodar"
+  (assets/rodar.wav), ya conectados. El código de los 3 niveles está en
+  penitente.gd (ver la conversación para la explicación paso a paso de cada
+  nivel: animación según velocidad real, orientación + área de golpe, y
+  rodar con speed_scale/await).
 
-Nivel 1 — animación según la velocidad real:
-- actualizar_animacion() en penitente.gd: decide quieto/correr/saltar/caer
-  usando is_on_floor() y get_real_velocity() (NUNCA la tecla presionada),
-  para que si el jugador empuja una pared se vea "quieto" aunque la tecla
-  siga activa.
-- sprite.speed_scale en "correr" sigue la rapidez real (abs(real.x)/speed),
-  así que el ritmo de las piernas no siempre va al 100%.
-
-Nivel 2 — orientación + área de golpe:
-- orientar() guarda hacia dónde se movió por última vez en "mirando" (1 o
-  -1) y voltea el sprite (flip_h) cuando mira a la izquierda, porque el
-  placeholder mira a la derecha por defecto.
-- flip_h solo espeja el dibujo, no mueve a los hijos, así que golpe.position.x
-  se recalcula a mano (36 * mirando) para que el área de golpe quede del
-  lado correcto.
-- atacar() reproduce el sonido de la espada con play() (no con
-  "if not playing"), para que cada tecla J suene aunque ataquen rápido.
-
-Nivel 3 — rodar:
-- rodar(): activa "rodando", reproduce la animación (6 cuadros, speed 15.0
-  = 0.4 s) y el sonido, y espera con `await sprite.animation_finished`
-  antes de apagar "rodando" (si "rodar" tuviera Loop activado, ese await
-  nunca dispararía y quedaría rodando para siempre).
-- Mientras "rodando" es true, _physics_process entra por una rama aparte:
-  mueve al Penitente a velocidad fija (velocidad_rodar) y NO lee teclado
-  (no cambia de dirección, no vuelve a rodar, no ataca).
-- assets/penitente_hoja.png: sigue siendo la hoja placeholder (recoloreada)
-  de la base — ahora con 13 cuadros en vez de 7, los últimos 6 (frames 7 a
-  12, 64x64 cada uno) son el ciclo de "rodar".
-
-Sprites reales (Blasphemous):
+Sprites:
+- assets/penitente_deslizar.png (22 oct): reemplaza la bolita placeholder
+  que tenía "rodar" por el dash/deslizar real del Penitente (Blasphemous),
+  recortado de la hoja de sprites que me pasaste (fila 6: la pose baja,
+  casi a ras de piso, con la espada al frente). Esa fila solo trae 3 cuadros
+  distintos, así que para no cambiar los 0.4 s / 15 FPS que ya tienes
+  anotados en las respuestas del Nivel 3 cada pose se repite dos veces
+  (3 poses × 2 = 6 cuadros), recortados por silueta quitando el fondo
+  verde, y espejados para que por defecto miren a la IZQUIERDA (misma
+  convención que penitente_real.png, ver "Corrección de orientación" más
+  abajo). penitente.tscn ya apunta a esta hoja (animación "rodar", sigue
+  en 6 cuadros / speed 15.0 — no hubo que tocar penitente.gd). El archivo
+  penitente_hoja.png (la hoja placeholder original) ya no se usa y se
+  borró del proyecto.
 - assets/penitente_real.png: hoja NUEVA armada a partir de los sprites
   oficiales de Blasphemous (Penitent One) que me pasaste. De ese paquete
   (que trae más de cien PNG sueltos: escaleras, rezo, parry, muerte, VFX,
   etc.) usé SOLO los archivos que corresponden a lo que el proyecto
-  necesita ("adelante/atrás, arriba/abajo, saltar y golpe"):
+  necesita, como pediste ("adelante/atrás, arriba/abajo, saltar y golpe"):
     * quieto  -> penintent_idle_anim 1.png   (1 frame)
     * correr  -> penitent_running_anim.png   (8 frames, ciclo de carrera)
     * saltar  -> penitent_jump_anim.png      (1 frame, subiendo)
     * caer    -> penitent_falling_loop_anim.png (1 frame, cayendo)
     * golpe   -> penitent_attack_combo_1.png (3 frames: armado, swing,
                  remate) — quedó cargada en el SpriteFrames como animación
-                 "golpe" lista para usarse, pero atacar() TODAVÍA no la
-                 reproduce (solo suena la espada): hacerla sonar sin que
-                 se corte con "correr" es la parte Extra/bonus del taller,
-                 que no es necesaria para la nota máxima (5.0).
+                 "golpe" lista para usarse, pero el código de atacar()
+                 TODAVÍA no la reproduce (solo suena la espada), porque
+                 hacerla sonar sin que se corte con "correr" es justo la
+                 parte Extra/bonus del taller que no hemos confirmado si
+                 hacer. Si la quieres, dime y la conectamos igual que
+                 "rodar" (con una bandera "atacando" + await).
   Esos PNG no venían en una grilla pareja (vienen "empaquetados" sin orden
   fijo), así que cada pose se recortó a mano por silueta (sin pixeles
-  transparentes alrededor) y se armaron en una sola hoja nueva.
-- "rodar" sigue usando la hoja placeholder (penitente_hoja.png) — todavía
-  no tengo el sprite real de "deslizar" de Blasphemous para esa animación.
+  transparentes alrededor) y se armaron en una sola hoja nueva, todas
+  mirando a la derecha (el arte original mira a la izquierda, así que cada
+  cuadro se espejó).
 - Por el cambio de tamaño del personaje (antes 64x64, ahora ~75x85 reales),
   ajusté también:
     * CollisionShape2D del Penitente: de 24x56 a 34x82.
     * Área "Golpe" (el hitbox de la espada): de x=36 con caja 28x28, a
       x=50 con caja 36x36.
-- Corrección de orientación: los sprites reales de Blasphemous vienen
-  dibujados mirando hacia la IZQUIERDA por defecto (al revés que el
-  placeholder, que miraba a la derecha), así que en orientar() la condición
-  de flip_h quedó invertida: `sprite.flip_h = mirando > 0` (antes era
-  `mirando < 0`), y `golpe.position.x = 50 * mirando` en vez de 36.
+
+Colores (18 oct): el fondo (#120F1A) y el piso (#2A2430) ahora son dos tonos
+distintos — antes casi no se notaban aparte porque el piso (#1B1F2B) quedó
+casi igual al fondo por defecto de la base (#1A1F2E).
+
+Corrección de orientación (18 oct): los sprites reales de Blasphemous vienen
+dibujados mirando hacia la IZQUIERDA por defecto (al revés que el
+placeholder original, que miraba a la derecha). Por eso en orientar()
+la condición de flip_h quedó invertida: `sprite.flip_h = mirando > 0`
+(antes era `mirando < 0`). También corregí la constante del área Golpe,
+que se había quedado en 36 en el código aunque el nodo ya estaba en 50:
+ahora `golpe.position.x = 50 * mirando` en todos lados.
 
 Abran con Godot 4.7: Import → elijan project.godot → Import & Edit.
 F5 para correr (la escena principal es mundo.tscn).
+Si vienes de una versión anterior de este zip: borra la carpeta vieja por
+completo antes de descomprimir esta (o descomprímela en una carpeta nueva)
+y, si ya tenías el proyecto abierto en Godot, usa Project → Reload Current
+Project — si no, a veces el editor se queda con la textura vieja en caché.
+
+(Actualizado 22 oct: "rodar" ya usa sprites reales — ver penitente_deslizar.png
+arriba — así que este último párrafo quedó resuelto.)
