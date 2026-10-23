@@ -6,15 +6,31 @@ extends CharacterBody2D
 @export var speed = 220.0              # px/s
 @export var gravedad = 1200.0          # px/s²
 @export var salto = 560.0              # px/s hacia arriba
+@export var velocidad_rodar = 400.0    # px/s mientras rueda
 
 @onready var sprite = $AnimatedSprite2D
 @onready var golpe = $Golpe             # el área que golpea con la espada
 @onready var sonido_espada = $Espada
+@onready var sonido_rodar = $Rodar
 
 var mirando = 1       # 1 = mirando a la derecha, -1 = mirando a la izquierda
+var rodando = false    # true mientras dura la animación/el movimiento de rodar
 
 
 func _physics_process(delta):
+	# Mientras rueda: movimiento propio a velocidad fija, sin leer teclado
+	# (ni cambiar de dirección, ni volver a rodar, ni atacar).
+	if rodando:
+		velocity.x = velocidad_rodar * mirando
+		if not is_on_floor():
+			velocity.y += gravedad * delta
+		move_and_slide()
+		return
+
+	if Input.is_action_just_pressed("rodar") and is_on_floor():
+		rodar()
+		return
+
 	mover(delta)
 	actualizar_animacion()
 	orientar()
@@ -76,3 +92,14 @@ func atacar():
 	# dos ataques en menos de 0.25 s solo sonarían una vez: el segundo
 	# play() se saltaría porque el primero seguiría "playing".)
 	sonido_espada.play()
+
+
+# ---------- Nivel 3 ----------
+func rodar():
+	rodando = true
+	sprite.speed_scale = 1.0
+	sprite.play("rodar")
+	sonido_rodar.play()
+	await sprite.animation_finished   # si "rodar" tuviera Loop activado, esto
+	                                    # nunca dispararía y quedaría rodando para siempre
+	rodando = false

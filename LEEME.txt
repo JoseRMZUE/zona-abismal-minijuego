@@ -26,7 +26,17 @@ Nivel 2 — orientación + área de golpe:
 - atacar() reproduce el sonido de la espada con play() (no con
   "if not playing"), para que cada tecla J suene aunque ataquen rápido.
 
-Todavía pendiente: Nivel 3 (rodar).
+Nivel 3 — rodar:
+- rodar(): activa "rodando", reproduce la animación (6 cuadros, speed 15.0
+  = 0.4 s) y el sonido, y espera con `await sprite.animation_finished`
+  antes de apagar "rodando" (si "rodar" tuviera Loop activado, ese await
+  nunca dispararía y quedaría rodando para siempre).
+- Mientras "rodando" es true, _physics_process entra por una rama aparte:
+  mueve al Penitente a velocidad fija (velocidad_rodar) y NO lee teclado
+  (no cambia de dirección, no vuelve a rodar, no ataca).
+- assets/penitente_hoja.png: sigue siendo la hoja placeholder (recoloreada)
+  de la base — ahora con 13 cuadros en vez de 7, los últimos 6 (frames 7 a
+  12, 64x64 cada uno) son el ciclo de "rodar".
 
 Abran con Godot 4.7: Import → elijan project.godot → Import & Edit.
 F5 para correr (la escena principal es mundo.tscn).

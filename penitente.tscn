@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://7h4ulbxm6yms" path="res://penitente.gd" id="s"]
 [ext_resource type="AudioStream" uid="uid://dl34ks1c1wrtp" path="res://assets/espada.wav" id="snd_espada"]
+[ext_resource type="AudioStream" uid="uid://poqfm7c1y7qm" path="res://assets/rodar.wav" id="snd_rodar"]
 [ext_resource type="Texture2D" uid="uid://c1qf8m2x7k00a" path="res://assets/penitente_hoja.png" id="t0"]
 
 [sub_resource type="AtlasTexture" id="A0_0"]
@@ -31,6 +32,30 @@ region = Rect2(320, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="A0_6"]
 atlas = ExtResource("t0")
 region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="A0_7"]
+atlas = ExtResource("t0")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="A0_8"]
+atlas = ExtResource("t0")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="A0_9"]
+atlas = ExtResource("t0")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="A0_10"]
+atlas = ExtResource("t0")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="A0_11"]
+atlas = ExtResource("t0")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="A0_12"]
+atlas = ExtResource("t0")
+region = Rect2(768, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_A0"]
 animations = [{
@@ -74,6 +99,29 @@ animations = [{
 "loop": false,
 "name": &"caer",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("A0_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("A0_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("A0_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("A0_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("A0_11")
+}, {
+"duration": 1.0,
+"texture": SubResource("A0_12")
+}],
+"loop": false,
+"name": &"rodar",
+"speed": 15.0
 }]
 
 [sub_resource type="RectangleShape2D" id="FormaGolpe"]
@@ -110,3 +158,6 @@ shape = SubResource("FormaGolpe")
 
 [node name="Espada" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("snd_espada")
+
+[node name="Rodar" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("snd_rodar")
