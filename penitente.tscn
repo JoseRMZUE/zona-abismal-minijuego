@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" uid="uid://7h4ulbxm6yms" path="res://penitente.gd" id="s"]
+[ext_resource type="AudioStream" uid="uid://dl34ks1c1wrtp" path="res://assets/espada.wav" id="snd_espada"]
 [ext_resource type="Texture2D" uid="uid://c1qf8m2x7k00a" path="res://assets/penitente_hoja.png" id="t0"]
 
 [sub_resource type="AtlasTexture" id="A0_0"]
@@ -106,3 +107,6 @@ color = Color(1, 0.3, 0.3, 0.35)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Golpe"]
 shape = SubResource("FormaGolpe")
+
+[node name="Espada" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("snd_espada")

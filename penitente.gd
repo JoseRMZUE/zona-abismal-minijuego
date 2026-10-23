@@ -9,11 +9,18 @@ extends CharacterBody2D
 
 @onready var sprite = $AnimatedSprite2D
 @onready var golpe = $Golpe             # el área que golpea con la espada
+@onready var sonido_espada = $Espada
+
+var mirando = 1       # 1 = mirando a la derecha, -1 = mirando a la izquierda
 
 
 func _physics_process(delta):
 	mover(delta)
 	actualizar_animacion()
+	orientar()
+
+	if Input.is_action_just_pressed("atacar"):
+		atacar()
 
 
 func mover(delta):
@@ -43,3 +50,29 @@ func actualizar_animacion():
 
 	# Evidencia para las capturas del Nivel 1 (quítenlo o coméntenlo después):
 	print(position.y, " ", sprite.animation)
+
+
+# ---------- Nivel 2 ----------
+func orientar():
+	var eje = Input.get_axis("move_left", "move_right")
+	if eje != 0:
+		mirando = sign(eje)
+	# El placeholder de la base mira a la derecha por defecto, así que
+	# solo hay que espejar el dibujo cuando mira a la izquierda.
+	sprite.flip_h = mirando < 0
+	# flip_h solo espeja el DIBUJO, no mueve a los hijos (el Area2D "Golpe"
+	# sigue en +36 aunque el sprite ya esté mirando a la izquierda), así que
+	# hay que reposicionar el área a mano según hacia dónde mira.
+	golpe.position.x = 36 * mirando
+
+	# Evidencia para las capturas del Nivel 2:
+	print(golpe.position.x)
+
+
+func atacar():
+	# Cada J debe sonar, aunque ataquen rápido: por eso NO se pregunta
+	# "if not sonido_espada.playing" antes de reproducir — play() siempre
+	# reinicia el sonido desde el principio. (Si preguntáramos playing,
+	# dos ataques en menos de 0.25 s solo sonarían una vez: el segundo
+	# play() se saltaría porque el primero seguiría "playing".)
+	sonido_espada.play()

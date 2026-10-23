@@ -16,8 +16,17 @@ Nivel 1 — animación según la velocidad real:
 - sprite.speed_scale en "correr" sigue la rapidez real (abs(real.x)/speed),
   así que el ritmo de las piernas no siempre va al 100%.
 
-Todavía pendiente: Nivel 2 (orientación + área de golpe) y Nivel 3 (rodar).
-El nodo "Golpe" ya viene de la base pero aún no se usa.
+Nivel 2 — orientación + área de golpe:
+- orientar() guarda hacia dónde se movió por última vez en "mirando" (1 o
+  -1) y voltea el sprite (flip_h) cuando mira a la izquierda, porque el
+  placeholder mira a la derecha por defecto.
+- flip_h solo espeja el dibujo, no mueve a los hijos, así que golpe.position.x
+  se recalcula a mano (36 * mirando) para que el área de golpe quede del
+  lado correcto.
+- atacar() reproduce el sonido de la espada con play() (no con
+  "if not playing"), para que cada tecla J suene aunque ataquen rápido.
+
+Todavía pendiente: Nivel 3 (rodar).
 
 Abran con Godot 4.7: Import → elijan project.godot → Import & Edit.
 F5 para correr (la escena principal es mundo.tscn).
