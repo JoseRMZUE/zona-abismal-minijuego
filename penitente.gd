@@ -73,13 +73,15 @@ func orientar():
 	var eje = Input.get_axis("move_left", "move_right")
 	if eje != 0:
 		mirando = sign(eje)
-	# El placeholder de la base mira a la derecha por defecto, así que
-	# solo hay que espejar el dibujo cuando mira a la izquierda.
-	sprite.flip_h = mirando < 0
+	# Los sprites reales (Blasphemous) vienen dibujados mirando hacia la
+	# izquierda por defecto, al revés que el placeholder original, por eso
+	# acá la condición queda invertida (mirando > 0) en vez de (mirando < 0):
+	# cuando mira a la derecha SÍ hay que espejar el dibujo.
+	sprite.flip_h = mirando > 0
 	# flip_h solo espeja el DIBUJO, no mueve a los hijos (el Area2D "Golpe"
-	# sigue en +36 aunque el sprite ya esté mirando a la izquierda), así que
+	# sigue en +50 aunque el sprite ya esté mirando a la izquierda), así que
 	# hay que reposicionar el área a mano según hacia dónde mira.
-	golpe.position.x = 36 * mirando
+	golpe.position.x = 50 * mirando
 
 	# Evidencia para las capturas del Nivel 2:
 	print(golpe.position.x)

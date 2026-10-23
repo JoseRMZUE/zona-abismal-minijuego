@@ -38,5 +38,37 @@ Nivel 3 — rodar:
   de la base — ahora con 13 cuadros en vez de 7, los últimos 6 (frames 7 a
   12, 64x64 cada uno) son el ciclo de "rodar".
 
+Sprites reales (Blasphemous):
+- assets/penitente_real.png: hoja NUEVA armada a partir de los sprites
+  oficiales de Blasphemous (Penitent One) que me pasaste. De ese paquete
+  (que trae más de cien PNG sueltos: escaleras, rezo, parry, muerte, VFX,
+  etc.) usé SOLO los archivos que corresponden a lo que el proyecto
+  necesita ("adelante/atrás, arriba/abajo, saltar y golpe"):
+    * quieto  -> penintent_idle_anim 1.png   (1 frame)
+    * correr  -> penitent_running_anim.png   (8 frames, ciclo de carrera)
+    * saltar  -> penitent_jump_anim.png      (1 frame, subiendo)
+    * caer    -> penitent_falling_loop_anim.png (1 frame, cayendo)
+    * golpe   -> penitent_attack_combo_1.png (3 frames: armado, swing,
+                 remate) — quedó cargada en el SpriteFrames como animación
+                 "golpe" lista para usarse, pero atacar() TODAVÍA no la
+                 reproduce (solo suena la espada): hacerla sonar sin que
+                 se corte con "correr" es la parte Extra/bonus del taller,
+                 que no es necesaria para la nota máxima (5.0).
+  Esos PNG no venían en una grilla pareja (vienen "empaquetados" sin orden
+  fijo), así que cada pose se recortó a mano por silueta (sin pixeles
+  transparentes alrededor) y se armaron en una sola hoja nueva.
+- "rodar" sigue usando la hoja placeholder (penitente_hoja.png) — todavía
+  no tengo el sprite real de "deslizar" de Blasphemous para esa animación.
+- Por el cambio de tamaño del personaje (antes 64x64, ahora ~75x85 reales),
+  ajusté también:
+    * CollisionShape2D del Penitente: de 24x56 a 34x82.
+    * Área "Golpe" (el hitbox de la espada): de x=36 con caja 28x28, a
+      x=50 con caja 36x36.
+- Corrección de orientación: los sprites reales de Blasphemous vienen
+  dibujados mirando hacia la IZQUIERDA por defecto (al revés que el
+  placeholder, que miraba a la derecha), así que en orientar() la condición
+  de flip_h quedó invertida: `sprite.flip_h = mirando > 0` (antes era
+  `mirando < 0`), y `golpe.position.x = 50 * mirando` en vez de 36.
+
 Abran con Godot 4.7: Import → elijan project.godot → Import & Edit.
 F5 para correr (la escena principal es mundo.tscn).
