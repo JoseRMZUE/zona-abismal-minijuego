@@ -9,13 +9,26 @@ const MAPA = [
 	"                                        ",
 	"                                        ",
 	"                                        ",
-	"#           #           ##             #",
+	"#           #           ##         E   #",
 	"#           #           ##             #",
 	"########################################",
 ]
 
 
+var LanceAngel_escena = preload("res://LanceAngel.tscn")
+
 func _ready():
-	# Piedra del templo hundido, más clara que el fondo para que se note
-	# dónde se puede caminar (el fondo quedó en #120F1A, bien oscuro).
-	construir_bloques(MAPA, Color(0.1647, 0.1412, 0.1882, 1))  # #2A2430
+	construir()
+	
+func construir():
+	construir_bloques(MAPA, Color(0.1647, 0.1412, 0.1882, 1))
+	for fila in MAPA.size():
+		for col in MAPA[fila].length():
+			var escena = null
+			match MAPA[fila][col]:
+				"E":
+					escena = LanceAngel_escena
+			if escena:
+				var nodo = escena.instantiate()
+				nodo.position = Vector2(col + 0.5, fila + 0.5) * CELDA
+				$Mapa.add_child(nodo)
