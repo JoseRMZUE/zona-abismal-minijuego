@@ -121,10 +121,12 @@ func atacar():
 	# dos ataques en menos de 0.25 s solo sonarían una vez: el segundo
 	# play() se saltaría porque el primero seguiría "playing".)
 	sonido_espada.play()
+	print("ataque: inicio")
 	# Lo siguiente va DESPUÉS del sonido: lo que está bajo el await solo corre cuando el golpe termina.
 	await sprite.animation_finished   # golpe tiene Loop apagado: si no, nunca termina
 	atacando = false
 	activar_golpe(false)
+	print("atacar: fin")
 
 
 # Enciende o apaga el área de golpe y su recuadro rojo.
@@ -141,8 +143,8 @@ func _on_frame_changed():
 
 # Se ejecuta cuando el área de golpe toca otra área (por ahora, el ángel).
 # El efecto sobre el enemigo se agrega en el siguiente paso.
-func _on_golpe_area_entered(_area: Area2D) -> void:
-	pass
+func _on_golpe_area_entered(area: Area2D) -> void:
+	print("golpe toco: ", area.name)
 
 
 # ---------- Nivel 3 ----------
