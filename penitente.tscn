@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://dl34ks1c1wrtp" path="res://assets/espada.wav" id="snd_espada"]
 [ext_resource type="AudioStream" uid="uid://poqfm7c1y7qm" path="res://assets/rodar.wav" id="snd_rodar"]
 [ext_resource type="Texture2D" uid="uid://deicma1hk5704" path="res://assets/penitente_real.png" id="t1"]
-[ext_resource type="Texture2D" path="res://assets/penitente_deslizar.png" id="t2"]
+[ext_resource type="Texture2D" uid="uid://byc68rnxt22jc" path="res://assets/penitente_deslizar.png" id="t2"]
 
 [sub_resource type="AtlasTexture" id="R_caer_0"]
 atlas = ExtResource("t1")
@@ -126,7 +126,7 @@ animations = [{
 "speed": 16.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 1.6,
 "texture": SubResource("R_golpe_0")
 }, {
 "duration": 1.0,
@@ -138,6 +138,11 @@ animations = [{
 "loop": 0,
 "name": &"golpe",
 "speed": 12.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"golpe2",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -189,8 +194,11 @@ size = Vector2(36, 36)
 script = ExtResource("s")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1058773764]
+position = Vector2(14, -2)
 sprite_frames = SubResource("SpriteFrames_A0")
-animation = &"quieto"
+animation = &"golpe"
+frame = 2
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=247527309]
 shape = SubResource("Forma")
@@ -209,6 +217,7 @@ color = Color(1, 0.3, 0.3, 0.35)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Golpe" unique_id=2140401612]
 shape = SubResource("FormaGolpe")
+disabled = true
 
 [node name="Espada" type="AudioStreamPlayer2D" parent="." unique_id=1736268474]
 stream = ExtResource("snd_espada")

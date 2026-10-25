@@ -7,6 +7,8 @@ extends CharacterBody2D
 @export var gravedad = 1200.0          # px/s²
 @export var salto = 560.0              # px/s hacia arriba
 @export var velocidad_rodar = 400.0    # px/s mientras rueda
+@export var atacando = false
+@export var velocidad_ataque = 1.0
 
 @onready var sprite = $AnimatedSprite2D
 @onready var golpe = $Golpe             # el área que golpea con la espada
@@ -26,7 +28,14 @@ func _physics_process(delta):
 			velocity.y += gravedad * delta
 		move_and_slide()
 		return
-
+		
+	if atacando:
+		if not is_on_floor():
+			velocity.y += gravedad * delta
+			velocity.x = Input.get_axis("move_left","move_right") * speed * velocidad_ataque
+			move_and_slide()
+			return
+			
 	if Input.is_action_just_pressed("rodar") and is_on_floor():
 		rodar()
 		return
@@ -105,5 +114,9 @@ func rodar():
 	sprite.play("rodar")
 	sonido_rodar.play()
 	await sprite.animation_finished   # si "rodar" tuviera Loop activado, esto
-	                                    # nunca dispararía y quedaría rodando para siempre
+										# nunca dispararía y quedaría rodando para siempre
 	rodando = false
+
+
+func _on_golpe_area_entered(area: Area2D) -> void:
+	pass # Replace with function body.
