@@ -190,7 +190,7 @@ size = Vector2(34, 82)
 [sub_resource type="RectangleShape2D" id="FormaGolpe"]
 size = Vector2(36, 36)
 
-[node name="Penitente" type="CharacterBody2D" unique_id=53610435]
+[node name="Penitente" type="CharacterBody2D" unique_id=53610435 groups=["penitente"]]
 script = ExtResource("s")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1058773764]
@@ -217,7 +217,6 @@ color = Color(1, 0.3, 0.3, 0.35)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Golpe" unique_id=2140401612]
 shape = SubResource("FormaGolpe")
-disabled = true
 
 [node name="Espada" type="AudioStreamPlayer2D" parent="." unique_id=1736268474]
 stream = ExtResource("snd_espada")
