@@ -145,6 +145,8 @@ func _on_frame_changed():
 # El efecto sobre el enemigo se agrega en el siguiente paso.
 func _on_golpe_area_entered(area: Area2D) -> void:
 	print("golpe toco: ", area.name)
+	if area.has_method("recibir_daño"):
+		area.recibir_daño(1)
 
 
 # ---------- Nivel 3 ----------

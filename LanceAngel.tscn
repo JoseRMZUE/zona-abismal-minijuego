@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://drwxqx8at6os4"]
 
 [ext_resource type="Texture2D" uid="uid://cgc2i0cgo61fq" path="res://assets/angel.png" id="1_51rs1"]
+[ext_resource type="Script" uid="uid://d31x43w70fgp6" path="res://lance_angel.gd" id="1_s20ke"]
 [ext_resource type="Texture2D" uid="uid://dehra5reshib8" path="res://assets/m1.png" id="2_s20ke"]
 [ext_resource type="Texture2D" uid="uid://d1c2gkuoinb8y" path="res://assets/m2.png" id="3_umf81"]
 [ext_resource type="Texture2D" uid="uid://catpqa1garajv" path="res://assets/m3.png" id="4_41x3e"]
@@ -96,7 +97,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pjnu6")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"morir",
 "speed": 5.0
 }, {
@@ -113,6 +114,7 @@ animations = [{
 size = Vector2(210, 179)
 
 [node name="LanceAngel" type="Area2D" unique_id=1316406502]
+script = ExtResource("1_s20ke")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=439316388]
 sprite_frames = SubResource("SpriteFrames_u5bk5")
