@@ -3,6 +3,29 @@
 [ext_resource type="Script" uid="uid://doadakbpyeck4" path="res://mundo.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://sbgxaalf2f2g" path="res://penitente.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://dfpkuwvdn7mqv" path="res://assets/cathedral-sprite-sheet.png" id="2_fw4w5"]
+[ext_resource type="Texture2D" uid="uid://5rd133nhsfk0" path="res://assets/fondo_arcos.png" id="10"]
+[ext_resource type="Texture2D" uid="uid://d02k6dl6vq13f" path="res://assets/fondo_pared_rota.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://dhpg6ypijhdil" path="res://assets/fondo_luz_catedral.png" id="12"]
+
+[sub_resource type="AtlasTexture" id="LuzCatedral"]
+atlas = ExtResource("12")
+region = Rect2(0, 0, 330, 355)
+
+[sub_resource type="AtlasTexture" id="ArcoA"]
+atlas = ExtResource("10")
+region = Rect2(0, 448, 128, 448)
+
+[sub_resource type="AtlasTexture" id="ArcoB"]
+atlas = ExtResource("10")
+region = Rect2(128, 448, 128, 448)
+
+[sub_resource type="AtlasTexture" id="RotaA"]
+atlas = ExtResource("11")
+region = Rect2(1, 3, 76, 204)
+
+[sub_resource type="AtlasTexture" id="RotaB"]
+atlas = ExtResource("11")
+region = Rect2(80, 3, 76, 204)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_otwa2"]
 texture = ExtResource("2_fw4w5")
