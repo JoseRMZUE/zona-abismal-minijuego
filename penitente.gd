@@ -7,16 +7,16 @@ extends CharacterBody2D
 @export var gravedad = 1200.0          # px/s²
 @export var salto = 560.0              # px/s hacia arriba
 @export var velocidad_rodar = 400.0    # px/s mientras rueda
-@export var atacando = false
-@export var velocidad_ataque = 1.0
+@export var velocidad_ataque = 1.0     # fracción de speed al atacar (1.0 = igual que correr)
 
 @onready var sprite = $AnimatedSprite2D
 @onready var golpe = $Golpe             # el área que golpea con la espada
 @onready var sonido_espada = $Espada
 @onready var sonido_rodar = $Rodar
 
-var mirando = 1       # 1 = mirando a la derecha, -1 = mirando a la izquierda
+var mirando = 1        # 1 = mirando a la derecha, -1 = mirando a la izquierda
 var rodando = false    # true mientras dura la animación/el movimiento de rodar
+var atacando = false   # true mientras dura la animación "golpe"
 
 
 func _physics_process(delta):
@@ -28,14 +28,17 @@ func _physics_process(delta):
 			velocity.y += gravedad * delta
 		move_and_slide()
 		return
-		
+
+	# Mientras ataca: puede seguir corriendo, pero no saltar, rodar,
+	# girar ni volver a atacar. No se llama orientar(), así que mantiene
+	# hacia dónde miraba al empezar.
 	if atacando:
 		if not is_on_floor():
 			velocity.y += gravedad * delta
-			velocity.x = Input.get_axis("move_left","move_right") * speed * velocidad_ataque
-			move_and_slide()
-			return
-			
+		velocity.x = Input.get_axis("move_left", "move_right") * speed * velocidad_ataque
+		move_and_slide()
+		return
+
 	if Input.is_action_just_pressed("rodar") and is_on_floor():
 		rodar()
 		return
@@ -44,7 +47,7 @@ func _physics_process(delta):
 	actualizar_animacion()
 	orientar()
 
-	if Input.is_action_just_pressed("atacar"):
+	if Input.is_action_just_pressed("atacar") and is_on_floor():
 		atacar()
 
 
@@ -59,24 +62,22 @@ func mover(delta):
 
 # ---------- Nivel 1 ----------
 func actualizar_animacion():
-	# OJO: se decide con is_on_floor() y la VELOCIDAD REAL (get_real_velocity()),
-	# nunca con qué tecla está presionada: si el jugador empuja una pared,
-	# la tecla sigue activa pero la velocidad real en x es ~0, y debe verse "quieto".
+	# Se decide con is_on_floor() y la VELOCIDAD REAL (get_real_velocity()),
+	# nunca con qué tecla está presionada.
 	var real = get_real_velocity()
 	if not is_on_floor():
 		sprite.play("saltar" if real.y < 0 else "caer")
 		sprite.speed_scale = 1.0
 	elif abs(real.x) > 1.0:
 		sprite.play("correr")
-		# Nivel 3: el ritmo de las piernas va con la rapidez real, no siempre al 100%.
+		# Nivel 3: el ritmo de las piernas va con la rapidez real.
 		sprite.speed_scale = abs(real.x) / speed
-		print(sprite.speed_scale)
+		#print(sprite.speed_scale)
 	else:
 		sprite.play("quieto")
 		sprite.speed_scale = 1.0
 
-	# Evidencia para las capturas del Nivel 1 (quítenlo o coméntenlo después):
-	print(position.y, " ", sprite.animation)
+	#print(position.y, " ", sprite.animation)
 
 
 # ---------- Nivel 2 ----------
@@ -85,26 +86,28 @@ func orientar():
 	if eje != 0:
 		mirando = sign(eje)
 	# Los sprites reales (Blasphemous) vienen dibujados mirando hacia la
-	# izquierda por defecto, al revés que el placeholder original, por eso
-	# acá la condición queda invertida (mirando > 0) en vez de (mirando < 0):
-	# cuando mira a la derecha SÍ hay que espejar el dibujo.
+	# izquierda, por eso la condición es (mirando > 0): al mirar a la
+	# derecha SÍ hay que espejar el dibujo.
 	sprite.flip_h = mirando > 0
-	# flip_h solo espeja el DIBUJO, no mueve a los hijos (el Area2D "Golpe"
-	# sigue en +50 aunque el sprite ya esté mirando a la izquierda), así que
-	# hay que reposicionar el área a mano según hacia dónde mira.
+	# flip_h solo espeja el DIBUJO: el área "Golpe" hay que moverla a mano.
 	golpe.position.x = 50 * mirando
 
-	# Evidencia para las capturas del Nivel 2:
-	print(golpe.position.x)
+	#print(golpe.position.x)
 
 
+# ---------- Ataque ----------
 func atacar():
+	atacando = true
+	sprite.speed_scale = 1.0   # correr deja la velocidad de la animación en otro valor
+	sprite.play("golpe")
 	# Cada J debe sonar, aunque ataquen rápido: por eso NO se pregunta
-	# "if not sonido_espada.playing" antes de reproducir — play() siempre
-	# reinicia el sonido desde el principio. (Si preguntáramos playing,
-	# dos ataques en menos de 0.25 s solo sonarían una vez: el segundo
-	# play() se saltaría porque el primero seguiría "playing".)
+	# "if not sonido_espada.playing": play() siempre reinicia el sonido.
+	# Va ANTES del await: lo que está después solo corre cuando el golpe termina.
 	sonido_espada.play()
+	print("ataque: inicio")
+	await sprite.animation_finished   # golpe tiene Loop apagado: si no, nunca termina
+	atacando = false
+	print("ataque: fin")
 
 
 # ---------- Nivel 3 ----------
@@ -118,5 +121,7 @@ func rodar():
 	rodando = false
 
 
+# La conectó el editor (señal area_entered del nodo Golpe). Se usará para
+# detectar al enemigo. No borrarla: la escena la referencia.
 func _on_golpe_area_entered(area: Area2D) -> void:
-	pass # Replace with function body.
+	pass
