@@ -3,6 +3,29 @@
 [ext_resource type="Script" uid="uid://doadakbpyeck4" path="res://mundo.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://sbgxaalf2f2g" path="res://penitente.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://dfpkuwvdn7mqv" path="res://assets/cathedral-sprite-sheet.png" id="2_fw4w5"]
+[ext_resource type="Texture2D" uid="uid://5rd133nhsfk0" path="res://assets/fondo_arcos.png" id="10"]
+[ext_resource type="Texture2D" uid="uid://d02k6dl6vq13f" path="res://assets/fondo_pared_rota.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://dhpg6ypijhdil" path="res://assets/fondo_luz_catedral.png" id="12"]
+
+[sub_resource type="AtlasTexture" id="LuzCatedral"]
+atlas = ExtResource("12")
+region = Rect2(0, 0, 330, 355)
+
+[sub_resource type="AtlasTexture" id="ArcoA"]
+atlas = ExtResource("10")
+region = Rect2(0, 448, 128, 448)
+
+[sub_resource type="AtlasTexture" id="ArcoB"]
+atlas = ExtResource("10")
+region = Rect2(128, 448, 128, 448)
+
+[sub_resource type="AtlasTexture" id="RotaA"]
+atlas = ExtResource("11")
+region = Rect2(1, 3, 76, 204)
+
+[sub_resource type="AtlasTexture" id="RotaB"]
+atlas = ExtResource("11")
+region = Rect2(80, 3, 76, 204)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_otwa2"]
 texture = ExtResource("2_fw4w5")
@@ -229,6 +252,54 @@ sources/0 = SubResource("TileSetAtlasSource_otwa2")
 
 [node name="Mundo" type="Node2D" unique_id=731446300]
 script = ExtResource("1")
+
+[node name="FondoCatedral" type="Node2D" parent="." unique_id=900010000]
+z_index = -10
+
+[node name="Luz" type="Sprite2D" parent="FondoCatedral" unique_id=900010001]
+position = Vector2(1280, 300)
+scale = Vector2(1.2, 1.2)
+texture = SubResource("LuzCatedral")
+
+[node name="Arco_160" type="Sprite2D" parent="FondoCatedral" unique_id=900010002]
+position = Vector2(160, 352)
+texture = SubResource("ArcoA")
+
+[node name="Arco_480" type="Sprite2D" parent="FondoCatedral" unique_id=900010003]
+position = Vector2(480, 352)
+texture = SubResource("ArcoB")
+
+[node name="Ruina_800_arriba" type="Sprite2D" parent="FondoCatedral" unique_id=900010004]
+position = Vector2(800, 270)
+texture = SubResource("RotaA")
+
+[node name="Ruina_800_abajo" type="Sprite2D" parent="FondoCatedral" unique_id=900010005]
+position = Vector2(800, 474)
+texture = SubResource("RotaB")
+
+[node name="Arco_1120" type="Sprite2D" parent="FondoCatedral" unique_id=900010006]
+position = Vector2(1120, 352)
+texture = SubResource("ArcoA")
+
+[node name="Arco_1440" type="Sprite2D" parent="FondoCatedral" unique_id=900010007]
+position = Vector2(1440, 352)
+texture = SubResource("ArcoB")
+
+[node name="Ruina_1760_arriba" type="Sprite2D" parent="FondoCatedral" unique_id=900010008]
+position = Vector2(1760, 270)
+texture = SubResource("RotaA")
+
+[node name="Ruina_1760_abajo" type="Sprite2D" parent="FondoCatedral" unique_id=900010009]
+position = Vector2(1760, 474)
+texture = SubResource("RotaB")
+
+[node name="Arco_2080" type="Sprite2D" parent="FondoCatedral" unique_id=900010010]
+position = Vector2(2080, 352)
+texture = SubResource("ArcoA")
+
+[node name="Arco_2400" type="Sprite2D" parent="FondoCatedral" unique_id=900010011]
+position = Vector2(2400, 352)
+texture = SubResource("ArcoB")
 
 [node name="Mapa" type="Node2D" parent="." unique_id=1532752580]
 
